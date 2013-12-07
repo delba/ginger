@@ -1,5 +1,8 @@
+fs   = require 'fs'
+path = require 'path'
 http = require 'http'
 url  = require 'url'
+orm  = require '../db/orm'
 
 class Video
   @endpoints =
@@ -17,8 +20,13 @@ class Video
       body = ''
       res.on 'data', (chunk) -> body += chunk
       res.on 'end', =>
-        for key, value of JSON.parse(body)
+        json = JSON.parse(body)
+
+        orm.store json
+
+        for key, value of json
           this[key] = value
+
         callback.apply @_controller
 
 module.exports = Video
