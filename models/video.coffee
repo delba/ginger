@@ -17,20 +17,8 @@ class Video
       body = ''
       res.on 'data', (chunk) -> body += chunk
       res.on 'end', =>
-        json = JSON.parse(body)
-        @provider_name = json.provider_name
-        @title = json.title
-        @author_name = json.author_name
-        @author_url = json.author_url
-        @html = json.html
-        @width = json.width
-        @height = json.height
-        @duration = json.duration
-        @description = json.description
-        @thumbnail_url = json.thumbnail_url
-        @thumbnail_width = json.width
-        @thumbnail_height = json.height
-        @video_id = json.video_id
+        for key, value of JSON.parse(body)
+          this[key] = value
         callback.apply @_controller
 
 module.exports = Video

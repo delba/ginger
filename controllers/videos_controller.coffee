@@ -17,7 +17,7 @@ class VideosController
       params = qs.parse(body)
       video = new Video(params, this)
       video.save ->
-        console.log video.html
+        console.log video
         @index()
 
 module.exports = VideosController
